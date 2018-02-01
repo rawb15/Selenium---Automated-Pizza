@@ -1,0 +1,32 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Support.PageObjects;
+using OpenQA.Selenium.Support.UI;
+
+namespace Automated_Dominos_Order
+{
+    class Program
+    {
+        //When the program is run, this calls the different class methods to interact and order pizza from the Dominos online pizza ordering system.
+        static void Main(string[] args)
+        {
+            WebDriver.driver = new FirefoxDriver();
+            Navigation.Navigate("https://order.dominos.com/en/?route=1");
+            Order_Online online = new Order_Online();
+            Delivery delivery = online.OrderButton();
+            Address_Information address = delivery.DeliveryButton();
+            Pizza pizza = address.Enter_Address_Info("Apartment", "Copham", "607 Washington Avenue North", 313, "Minneapolis", "MN", 55401);
+            Pizza_Builder custom = pizza.Build_A_Pizza();
+            Order_Settings order = custom.MakePizza();
+            order.SetOrder("Robert", "Ankeny", "anken020@umn.edu", 6124810030);
+        }
+    }
+}
+

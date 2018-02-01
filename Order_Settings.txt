@@ -1,0 +1,47 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Support.PageObjects;
+
+namespace Automated_Dominos_Order
+{
+    class Order_Settings
+    {
+         public Order_Settings()
+        {
+            //Uses the PageFactory tool in order to locate and interact with specific elements on the webpage of interest.
+            PageFactory.InitElements(WebDriver.driver, this);
+        }
+
+        [FindsBy(How = How.Id, Using = "First_Name")]
+        public IWebElement firstName { get; set; }
+
+        [FindsBy(How = How.Id, Using = "Last_Name")]
+        public IWebElement lastName { get; set; }
+
+        [FindsBy(How = How.Id, Using = "Email")]
+        public IWebElement email { get; set; }
+
+        [FindsBy(How = How.Id, Using = "Callback_Phone")]
+        public IWebElement phone { get; set; }
+
+        [FindsBy(How = How.XPath, Using = ".//*[@id='orderPaymentPage']/form/div[4]/div/div[2]/div/div[3]/label/input")]
+        public IWebElement cash { get; set; }
+
+        //Enters phone number, payment method (cash or card), and other delivery information. This also orders the pizza.
+        public void SetOrder(string first_name, string last_name, string Email, long Phone)
+        {
+            Explicit_Wait.ExplicitWait("Id", "First_Name");
+            firstName.EnterText(first_name);
+            lastName.EnterText(last_name);
+            email.EnterText(Email);
+            phone.EnterText(Phone.ToString());
+            cash.Clicks();
+        }
+    }
+}
+

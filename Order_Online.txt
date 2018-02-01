@@ -1,0 +1,33 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Support.PageObjects;
+
+namespace Automated_Dominos_Order
+{
+    class Order_Online
+    {
+        public Order_Online()
+        {
+            //Uses the PageFactory tool in order to locate and interact with specific elements on the webpage of interest.
+            PageFactory.InitElements(WebDriver.driver, this);
+        }
+
+        //This [FindsBy] PageFactory tool finds web elements (xpath, id, Name, or CssSelector) on a specified webpage
+        //and uses a IWebElement and extension methods for complete webpage interaction.
+        [FindsBy(How = How.ClassName, Using = "qa-Cl_order")]
+        public IWebElement onlineButton { get; set; }
+
+        //Clicks the Order Online button from the Dominos Homepage and returns a new instance of the Delivery class.
+        public Delivery OrderButton()
+        {
+            Explicit_Wait.ExplicitWait("ClassName", "qa-Cl_order");
+            onlineButton.Clicks();
+            return new Delivery();
+        }
+    }
+}

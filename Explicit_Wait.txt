@@ -1,0 +1,39 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Support.PageObjects;
+
+namespace Automated_Dominos_Order
+{
+    public static class Explicit_Wait
+    {
+        //Method that makes sure the certain elements on the webpage of interest are loaded and ready to be interacted with.
+        public static void ExplicitWait(string elementtype, string Text)
+        {
+            WebDriverWait wait = new WebDriverWait(WebDriver.driver, TimeSpan.FromSeconds(10));
+
+            switch (elementtype)
+            {
+                case "ClassName":
+                    wait.Until(ExpectedConditions.ElementIsVisible(By.ClassName(Text)));
+                    break;
+                case "CssSelector":
+                    wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(Text)));
+                    break;
+                case "Id":
+                    wait.Until(ExpectedConditions.ElementIsVisible(By.Id(Text)));
+                    break;
+                case "Name":
+                    wait.Until(ExpectedConditions.ElementIsVisible(By.Name(Text)));
+                    break;
+                case "XPath":
+                    wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(Text)));
+                    break;
+            }
+        }
+    }
+}

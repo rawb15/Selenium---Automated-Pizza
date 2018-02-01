@@ -1,0 +1,31 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Support.PageObjects;
+
+namespace Automated_Dominos_Order
+{
+    class Pizza
+    {
+         public Pizza()
+        {
+            //Uses the PageFactory tool in order to locate and interact with specific elements on the webpage of interest.
+            PageFactory.InitElements(WebDriver.driver, this);
+        }
+
+        [FindsBy(How = How.XPath, Using = ".//*[@id='entree-BuildYourOwn']/a")]
+        public IWebElement Build { get; set; }
+
+        //Clicks the Build Your Own Pizza button and returns a new instance of the Pizza_Builder class.
+        public Pizza_Builder Build_A_Pizza()
+        {
+            Explicit_Wait.ExplicitWait("XPath", ".//*[@id='entree-BuildYourOwn']/a");
+            Build.Clicks();
+            return new Pizza_Builder();
+        }
+    }
+}

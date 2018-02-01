@@ -1,0 +1,59 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Support.PageObjects;
+
+namespace Automated_Dominos_Order
+{
+    class Address_Information
+    {
+        public Address_Information()
+        {
+            //Uses the PageFactory tool in order to locate and interact with specific elements on the webpage of interest.
+            PageFactory.InitElements(WebDriver.driver, this);
+        }
+
+        [FindsBy(How = How.Id, Using = "Address_Type_Select")]
+        public IWebElement addressType { get; set; }
+
+        [FindsBy(How = How.Id, Using = "Location_Name")]
+        public IWebElement apartment_Name { get; set; }
+
+        [FindsBy(How = How.Id, Using = "Street")]
+        public IWebElement streetAddress { get; set; }
+
+        [FindsBy(How = How.Id, Using = "Address_Line_2")]
+        public IWebElement suite_Apartment { get; set; }
+
+        [FindsBy(How = How.Id, Using = "City")]
+        public IWebElement city { get; set; }
+
+        [FindsBy(How = How.Id, Using = "Region")]
+        public IWebElement region { get; set; }
+
+        [FindsBy(How = How.Id, Using = "Postal_Code")]
+        public IWebElement zip_code { get; set; }
+
+        [FindsBy(How = How.CssSelector, Using = "button.btn.btn--large.js-search-cta")]
+        public IWebElement searchLocations { get; set; }
+
+        //Enters the address information for pizza delivery: Address, city, state, zip, etc and returns a new instance of the Pizza class.
+        public Pizza Enter_Address_Info(string apartment, string apt_Name, string Street_address, int apt_number, string City, string State, int zip)
+        {
+            Explicit_Wait.ExplicitWait("Id", "Address_Type_Select");
+            addressType.SelectDropDown(apartment);
+            apartment_Name.EnterText(apt_Name);
+            streetAddress.EnterText(Street_address.ToString());
+            suite_Apartment.EnterText(apt_number.ToString());
+            city.EnterText(City);
+            region.SelectDropDown(State);
+            zip_code.EnterText(zip.ToString());
+            searchLocations.Clicks();
+            return new Pizza();
+        }
+    }
+}

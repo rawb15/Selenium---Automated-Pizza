@@ -1,0 +1,65 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Support.PageObjects;
+
+namespace Automated_Dominos_Order
+{
+    class Pizza_Builder
+    {
+        public Pizza_Builder()
+        {
+            //Uses the PageFactory tool in order to locate and interact with specific elements on the webpage of interest.
+            PageFactory.InitElements(WebDriver.driver, this);
+        }
+
+        [FindsBy(How = How.Id, Using = "cheeseSauce")]
+        public IWebElement cheeseSauce { get; set; }
+
+        [FindsBy(How = How.CssSelector, Using = "button.btn.js-closePizzaMessage.cheeseUpsell.js-cheeseUpsellClose")]
+        public IWebElement noXtraCheese { get; set; }
+
+        [FindsBy(How = How.Id, Using = "toppings")]
+        public IWebElement toppings { get; set; }
+
+        [FindsBy(How = How.XPath, Using = ".//*[@id='toppingsWrapper']/div[2]/div/div[1]/div[1]/label")]
+        public IWebElement pepperoni { get; set; }
+
+        [FindsBy(How = How.XPath, Using = ".//*[@id='toppingsWrapper']/div[3]/div/div[1]/div[3]/label")]
+        public IWebElement shreddedParmesan { get; set; }
+
+        [FindsBy(How = How.XPath, Using = ".//*[@id='pizzaSummaryInColumn']/div[2]/div[2]/button")]
+        public IWebElement addOrder { get; set; }
+
+        [FindsBy(How = How.XPath, Using = ".//*[@id='orderSummaryInColumn']/div[2]/div[1]/a")]
+        public IWebElement checkout { get; set; }
+
+        [FindsBy(How = How.CssSelector, Using = "a.card--overlay__close.js-closeButton")]
+        public IWebElement noDesert { get; set; }
+
+        [FindsBy(How = How.CssSelector, Using = "a.btn.btn--large.btn--block.submitButton.qa-OrCheck.js-continueCheckout")]
+        public IWebElement continueCheckout { get; set; }
+
+        //Chooses the size, toppings, and extra ingredients for your pizza and returns a new instance of the Order_Settings class.
+        public Order_Settings MakePizza()
+        {
+            Explicit_Wait.ExplicitWait("Id", "cheeseSauce");
+            cheeseSauce.Clicks();
+            toppings.Clicks();
+            noXtraCheese.Clicks();
+            pepperoni.Clicks();
+            shreddedParmesan.Clicks();
+            addOrder.Clicks();
+            Explicit_Wait.ExplicitWait("XPath", ".//*[@id='orderSummaryInColumn']/div[2]/div[1]/a");
+            checkout.Clicks();
+            noDesert.Clicks();
+            Explicit_Wait.ExplicitWait("CssSelector", "a.btn.btn--large.btn--block.submitButton.qa-OrCheck.js-continueCheckout");
+            continueCheckout.Clicks();
+            return new Order_Settings();
+        }
+    }
+}

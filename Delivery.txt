@@ -1,0 +1,32 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Support.PageObjects;
+
+
+namespace Automated_Dominos_Order
+{
+    class Delivery
+    {
+        public Delivery()
+        {
+            //Uses the PageFactory tool in order to locate and interact with specific elements on the webpage of interest.
+            PageFactory.InitElements(WebDriver.driver, this);
+        }
+
+        [FindsBy(How = How.CssSelector, Using = "span.form__input--icon.Delivery.js-delivery")]
+        public IWebElement deliveryButton { get; set; }
+
+        //Clicks the Delivery button and returns a new instance of the Address_Information class.
+        public Address_Information DeliveryButton()
+        {
+            Explicit_Wait.ExplicitWait("CssSelector", "span.form__input--icon.Delivery.js-delivery");
+            deliveryButton.Clicks();
+            return new Address_Information();
+        }
+    }
+}

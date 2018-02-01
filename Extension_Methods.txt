@@ -1,0 +1,32 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Support.PageObjects;
+
+namespace Automated_Dominos_Order
+{
+    public static class Extension_Methods
+    {
+        public static void EnterText(this IWebElement element, string value)
+        {
+            //Method for entering text into a textbox.
+            element.SendKeys(value);
+        }
+
+        public static void Clicks(this IWebElement element)
+        {
+            //Method for clicking a button.
+            element.Click();
+        }
+
+        public static void SelectDropDown(this IWebElement element, string value)
+        {
+            //Method for selecting a particular item from a dropdown menu.
+            new SelectElement(element).SelectByValue(value);
+        }
+    }
+}
